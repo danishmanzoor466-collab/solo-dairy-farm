@@ -1,0 +1,187 @@
+type Timestamp = int;
+type Stats = 
+ record {
+   pendingEnquiries: nat;
+   pendingOrders: nat;
+   totalOrders: nat;
+   totalRevenue: nat;
+ };
+type Settings = 
+ record {
+   businessPhone: text;
+   contactEmail: text;
+   deliveryPolicy: text;
+   hoursOfOperation: text;
+   whatsappGreeting: text;
+   whatsappNumber: text;
+ };
+type ProductInput = 
+ record {
+   category: ProductCategory;
+   description: text;
+   imageUrl: text;
+   isActive: bool;
+   name: text;
+   price: nat;
+   stock: nat;
+ };
+type ProductId = nat;
+type ProductCategory = 
+ variant {
+   Cow;
+   DairyProduct;
+   Milk;
+ };
+type Product = 
+ record {
+   category: ProductCategory;
+   createdAt: Timestamp;
+   description: text;
+   id: ProductId;
+   imageUrl: text;
+   isActive: bool;
+   name: text;
+   price: nat;
+   stock: nat;
+ };
+type PaymentMethod = 
+ variant {
+   CashOnDelivery;
+   UPI;
+ };
+type OrderType = 
+ variant {
+   OneTime;
+   SubscriptionDaily;
+   SubscriptionWeekly;
+ };
+type OrderStatus = 
+ variant {
+   Cancelled;
+   Confirmed;
+   Delivered;
+   Pending;
+ };
+type OrderItem = 
+ record {
+   price: nat;
+   productId: ProductId;
+   quantity: nat;
+ };
+type OrderInput = 
+ record {
+   customerEmail: text;
+   customerName: text;
+   customerPhone: text;
+   deliveryAddress: text;
+   items: vec OrderItem;
+   orderType: OrderType;
+   paymentMethod: PaymentMethod;
+   specialInstructions: text;
+   totalAmount: nat;
+ };
+type OrderId = nat;
+type Order = 
+ record {
+   createdAt: Timestamp;
+   customerEmail: text;
+   customerName: text;
+   customerPhone: text;
+   deliveryAddress: text;
+   id: OrderId;
+   items: vec OrderItem;
+   orderType: OrderType;
+   paymentMethod: PaymentMethod;
+   specialInstructions: text;
+   status: OrderStatus;
+   totalAmount: nat;
+ };
+type EnquiryType = 
+ variant {
+   CowInquiry;
+   General;
+   ProductQuestion;
+ };
+type EnquiryStatus = 
+ variant {
+   New;
+   Read;
+   Replied;
+ };
+type EnquiryInput = 
+ record {
+   customerEmail: text;
+   customerName: text;
+   customerPhone: text;
+   enquiryType: EnquiryType;
+   message: text;
+   subject: text;
+ };
+type EnquiryId = nat;
+type Enquiry = 
+ record {
+   createdAt: Timestamp;
+   customerEmail: text;
+   customerName: text;
+   customerPhone: text;
+   enquiryType: EnquiryType;
+   id: EnquiryId;
+   message: text;
+   status: EnquiryStatus;
+   subject: text;
+ };
+type CowInput = 
+ record {
+   ageMonths: nat;
+   breed: text;
+   description: text;
+   healthStatus: text;
+   imageUrls: vec text;
+   isAvailable: bool;
+   milkCapacityLiters: nat;
+   price: nat;
+ };
+type CowId = nat;
+type Cow = 
+ record {
+   ageMonths: nat;
+   breed: text;
+   createdAt: Timestamp;
+   description: text;
+   healthStatus: text;
+   id: CowId;
+   imageUrls: vec text;
+   isAvailable: bool;
+   milkCapacityLiters: nat;
+   price: nat;
+ };
+service : {
+  addCow: (input: CowInput) -> (Cow);
+  addProduct: (input: ProductInput) -> (Product);
+  checkIsAdmin: () -> (bool);
+  deleteCow: (id: CowId) -> (bool);
+  deleteProduct: (id: ProductId) -> (bool);
+  getAdmin: () -> (opt principal) query;
+  getAvailableCows: () -> (vec Cow) query;
+  getCowById: (id: CowId) -> (opt Cow) query;
+  getCows: () -> (vec Cow) query;
+  getDashboardStats: () -> (Stats);
+  getEnquiries: () -> (vec Enquiry) query;
+  getOrderById: (id: OrderId) -> (opt Order) query;
+  getOrders: () -> (vec Order) query;
+  getProductById: (id: ProductId) -> (opt Product) query;
+  getProducts: () -> (vec Product) query;
+  getProductsByCategory: (category: ProductCategory) -> (vec Product) query;
+  getSettings: () -> (Settings) query;
+  placeOrder: (input: OrderInput) -> (Order);
+  setAdmin: ("principal": principal) -> ();
+  submitEnquiry: (input: EnquiryInput) -> (Enquiry);
+  toggleCowAvailability: (id: CowId) -> (opt Cow);
+  toggleProductActive: (id: ProductId) -> (opt Product);
+  updateCow: (id: CowId, input: CowInput) -> (opt Cow);
+  updateEnquiryStatus: (id: EnquiryId, status: EnquiryStatus) ->
+   (opt Enquiry);
+  updateOrderStatus: (id: OrderId, status: OrderStatus) -> (opt Order);
+  updateProduct: (id: ProductId, input: ProductInput) -> (opt Product);
+  updateSettings: (settings: Settings) -> (Settings);
+}

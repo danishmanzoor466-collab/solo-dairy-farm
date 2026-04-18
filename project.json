@@ -1,0 +1,27 @@
+{
+  "overview": "Solo Dairy Farm is a mobile-first website for a dairy business featuring a homepage with hero section, product catalog for milk and dairy products, a cow marketplace, online ordering with Cash on Delivery and UPI payment options, a contact page with WhatsApp integration, and a secure admin panel for managing products, orders, and customer enquiries.",
+  "features": [
+    "Farm-themed homepage with hero section and featured products",
+    "Product catalog for fresh milk, ghee, butter, and curd",
+    "Cow marketplace with breed, age, milk capacity, and price details",
+    "Order system with subscriptions and one-time purchases",
+    "Cash on Delivery and UPI payment options",
+    "Contact page with WhatsApp button and location map",
+    "Floating WhatsApp chat button on all pages",
+    "Admin panel with dashboard, product/cow/order management",
+    "Image uploads for products and cows",
+    "Responsive mobile-first design with green and earthy tones"
+  ],
+  "category": "e-commerce",
+  "tags": [
+    "dairy",
+    "farm",
+    "e-commerce",
+    "marketplace",
+    "mobile-first",
+    "admin-panel",
+    "whatsapp",
+    "subscription"
+  ],
+  "last_updated": "2026-04-18T11:22:18.736Z"
+}

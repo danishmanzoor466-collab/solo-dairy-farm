@@ -1,0 +1,118 @@
+// Version: 1.0.0
+type CowId__655964504 = Nat;
+type Cow__959067611 =
+  {
+    ageMonths : Nat;
+    breed : Text;
+    createdAt : Timestamp__301639476;
+    description : Text;
+    healthStatus : Text;
+    id : CowId__655964504;
+    imageUrls : [Text];
+    isAvailable : Bool;
+    milkCapacityLiters : Nat;
+    price : Nat
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type EnquiryId__100513705 = Nat;
+type EnquiryStatus__663100040 = {#New; #Read; #Replied};
+type EnquiryType__56895044 = {#CowInquiry; #General; #ProductQuestion};
+type Enquiry__302813802 =
+  {
+    createdAt : Timestamp__301639476;
+    customerEmail : Text;
+    customerName : Text;
+    customerPhone : Text;
+    enquiryType : EnquiryType__56895044;
+    id : EnquiryId__100513705;
+    message : Text;
+    status : EnquiryStatus__663100040;
+    subject : Text
+  };
+type Int__270357528 = Int__616954475;
+type Int__616954475 = Int;
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type OrderId__197865225 = Nat;
+type OrderItem__241319351 =
+  {price : Nat; productId : ProductId__160010635; quantity : Nat};
+type OrderStatus__272730104 = {#Cancelled; #Confirmed; #Delivered; #Pending};
+type OrderType__209401566 =
+  {#OneTime; #SubscriptionDaily; #SubscriptionWeekly};
+type Order__141779993 =
+  {
+    createdAt : Timestamp__301639476;
+    customerEmail : Text;
+    customerName : Text;
+    customerPhone : Text;
+    deliveryAddress : Text;
+    id : OrderId__197865225;
+    items : [OrderItem__241319351];
+    orderType : OrderType__209401566;
+    paymentMethod : PaymentMethod__972042942;
+    specialInstructions : Text;
+    status : OrderStatus__272730104;
+    totalAmount : Nat
+  };
+type PaymentMethod__972042942 = {#CashOnDelivery; #UPI};
+type ProductCategory__881258261 = {#Cow; #DairyProduct; #Milk};
+type ProductId__160010635 = Nat;
+type Product__750902660 =
+  {
+    category : ProductCategory__881258261;
+    createdAt : Timestamp__301639476;
+    description : Text;
+    id : ProductId__160010635;
+    imageUrl : Text;
+    isActive : Bool;
+    name : Text;
+    price : Nat;
+    stock : Nat
+  };
+type Settings__831483091 =
+  {
+    businessPhone : Text;
+    contactEmail : Text;
+    deliveryPolicy : Text;
+    hoursOfOperation : Text;
+    whatsappGreeting : Text;
+    whatsappNumber : Text
+  };
+type Time__796480547 = Int__270357528;
+type Time__900049286 = Time__796480547;
+type Timestamp__301639476 = Time__900049286;
+actor {
+  stable adminState :
+    {var adminPrincipal : ?Principal; var settings : Settings__831483091};
+  stable cowStore :
+    {
+      var root : Node__46230540<CowId__655964504, Cow__959067611>;
+      var size : Nat__490723111
+    };
+  stable enquiriesState :
+    {
+      enquiries : Map__605269027<EnquiryId__100513705, Enquiry__302813802>;
+      var nextEnquiryId : Nat
+    };
+  stable nextCowId : {var value : Nat};
+  stable ordersState :
+    {
+      var nextOrderId : Nat;
+      orders : Map__605269027<OrderId__197865225, Order__141779993>
+    };
+  stable productState :
+    {
+      var nextId : ProductId__160010635;
+      products : Map__605269027<ProductId__160010635, Product__750902660>
+    }
+};
